@@ -1,0 +1,23 @@
+# Arquivos sensíveis
+.env
+
+# Arquivos e pastas de ambiente virtual
+env/
+.env/
+__pycache__/
+*.pyc
+
+# Arquivos do sistema
+.DS_Store
+
+# Cache do Python
+*.pyo
+*.pyd
+*.pdb
+
+# Logs
+*.log
+
+# Configs locais (ex: VSCode)
+.vscode/
+.idea/
