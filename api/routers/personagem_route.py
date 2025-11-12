@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from ..database.db import get_db, Personagem, Ataque_basico, Habilidade, Causa, Dano, HabColab
+from ..database.db import get_db, Personagem, Ataque_basico, Habilidade, Causa, Dano, HabColab, abates_personagens
 
 router = APIRouter(prefix="/personagens", tags=["personagens"])
 
@@ -69,3 +69,10 @@ def get_personagem_por_nome(personagem_nome: str, db: Session = Depends(get_db))
     if not caracteristicas:
         raise HTTPException(status_code=404, detail="Personagem não encontrado")
     return personagem
+
+@router.get("/abates/{personagem_nome}")
+def get_abates_personagem(personagem_nome: str, db: Session = Depends(get_db)):
+    resultado = [item for item in abates_personagens if item['nome_personagem'].lower() == personagem_nome.lower()]
+    if not resultado:
+        raise HTTPException(status_code=404, detail="Personagem não encontrado")
+    return resultado
