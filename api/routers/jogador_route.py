@@ -1,6 +1,6 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
-from ..database.db import get_db, Jogador, vitorias_jogadores_personagens
+from ..database.db import get_db, Jogador, vitorias_jogadores_personagens, estatisticas_jogadores
 
 router = APIRouter(prefix="/jogadores", tags=["jogadores"])
 
@@ -10,7 +10,7 @@ def get_jogadores(db: Session = Depends(get_db)):
     return jogadores
 
 @router.get("/jogador/{jogador_nome}")
-def get_personagem_por_nome(jogador_nome: str, db: Session = Depends(get_db)):
+def get_jogador_por_nome(jogador_nome: str, db: Session = Depends(get_db)):
     jogador = db.query(Jogador).filter(Jogador.nome.ilike(f"%{jogador_nome}%")).first()
 
     if not jogador:
@@ -23,3 +23,7 @@ def get_vitorias_jogador_personagem(jogador_nome: str):
     if not resultado:
         raise HTTPException(status_code=404, detail="Jogador não encontrado")
     return resultado
+
+@router.get("/estatisticas")
+def get_estatisticas_jogador():
+    return estatisticas_jogadores

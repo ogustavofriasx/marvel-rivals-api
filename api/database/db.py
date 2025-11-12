@@ -39,10 +39,15 @@ with engine.connect() as conn:
     result = conn.execute(text("SELECT * FROM vw_vitorias_jogador_personagem ORDER BY id_jogador;"))
     vitorias_jogadores_personagens = result.mappings().all()
 
-#total de abates por personagem
+#total de abates de cada personagem
 with engine.connect() as conn:
-     result = conn.execute(text("SELECT * from vw_total_abates_personagem ORDER BY id_personagem;"))
+     result = conn.execute(text("SELECT * FROM vw_estatisticas_personagem ORDER BY id_personagem;"))
      abates_personagens = result.mappings().all()
+
+#total de vitorias e abates de cada jogador
+with engine.connect() as conn:
+     result = conn.execute(text("SELECT * FROM vw_estatisticas_jogador ORDER BY id_jogador;"))
+     estatisticas_jogadores = result.mappings().all()
 
 #print(Base.classes.keys())
 
